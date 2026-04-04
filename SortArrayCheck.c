@@ -1,42 +1,67 @@
 /**
- * @file SortArrayCheck.c
- * @brief Checks if a given array is sorted in ascending or descending order.
- *
- * @author Your Name
- * @date 2024-05-20
- * 
- * @details This program prompts the user for array input and then performs
- *          a linear check to determine the sorted state of the data.
+ * file" SortArrayCheck.c
+ * description: Checks if a given array is sorted in ascending order.
  */
 
 #include <stdio.h>
+#include <stdbool.h> // Standard boolean library
 
-/* Define a constant for the array size to make the code easier to maintain */
 #define ARRAY_SIZE 7
+
+// Function Prototype
+bool CheckArray(int *arr, int size);
 
 int main(void)
 {
-    /* Declare an array of a fixed size defined above */
-    int array[ARRAY_SIZE]={0};
+    int array[ARRAY_SIZE] = {0};
+    bool isSorted = false; 
     
     printf("Please enter %d integers:\n", ARRAY_SIZE);
 
-    /* Loop through the array to collect user input */
     for (int i = 0; i < ARRAY_SIZE; i++)
     {
-        /* 
-           scanf returns the number of successfully read items.
-           If it's not 1, the user entered something that isn't an integer.
-        */
         if (scanf("%d", &array[i]) != 1) 
         {
-            printf("Error: Invalid input encountered. Please enter numbers only.\n");
-            return 1; // Exit the program with an error status
+            printf("Error: Invalid input.\n");
+            return 1; 
         }
     }
 	
-	for
+    isSorted = CheckArray(array, ARRAY_SIZE);
 
-    /* Standard practice to return 0, indicating the program finished successfully */
+    if (isSorted)
+    {
+        printf("Array is sorted!\n");
+    }
+    else
+    {
+        printf("Array is not sorted!\n");
+    }
+
     return 0;
 }
+
+/**
+ * Checks if the array is sorted in non-decreasing (ascending) order.
+ */
+bool CheckArray(int *arr, int size)
+{
+    if ((size==0 ) || (size==1))
+	{
+		return true;
+	}
+	else
+	{
+     	// Start by assuming it is sorted
+		for (int i = 1; i < size; i++)
+		{
+			// If the current element is smaller than the previous one, it's not sorted
+			if (arr[i] < arr[i - 1])
+			{
+				return false; // Exit early if we find an unsorted pair
+			}
+        }
+	}
+    return true; 
+}
+
